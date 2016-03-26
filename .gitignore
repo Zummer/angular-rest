@@ -1,0 +1,8 @@
+tests
+access.log
+error.log
+.idea
+*.html~
+readme2.md
+vendor
+simpleCtrl.js

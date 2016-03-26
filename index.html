@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="CrudApp">
+<head>
+    <base href="/"/>
+    <meta charset='utf-8'>
+    <title>AngularJs</title>
+    <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<body>
+<div class="container" ng-controller="defaultCtrl">
+    <div ng-view></div>
+</div>
+
+<!-- Библиотека гугл мапс -->
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
+<script src="vendor/angular/angular.min.js"></script>
+<script src="vendor/angular-resource/angular-resource.min.js"></script>
+<script src="vendor/angular-route/angular-route.min.js"></script>
+<script src="vendor/angular-utils-pagination/dirPagination.js"></script>
+<script src="vendor/ngAutocomplete/src/ngAutocomplete.js"></script>
+<!--<script src="vendor/ui-router/release/angular-ui-router.min.js"></script>-->
+
+
+<script src="app.js"></script>
+<script src="modules/default/services/ItemsService.js"></script>
+<script src="modules/default/controllers/defaultCtrl.js"></script>
+
+</body>
+</html>

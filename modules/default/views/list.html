@@ -1,0 +1,64 @@
+<h2>Компании</h2>
+<div class="row">
+    <div class="col-xs-4">
+        <h3>Cтраница: {{ pagination.page }}</h3>
+    </div>
+    <div class="col-xs-4">
+        <label for="search">Фильтр:</label>
+
+        <div class="input-group">
+            <input type="search" ng-keypress="myPressFunct($event)" ng-model="pagination.filter" id="search"
+                   class="form-control"
+                   placeholder="Поиск...">
+        <span class="input-group-btn">
+            <button ng-hide="!pagination.filter" ng-disabled="!pagination.filter" class="btn btn-default" type="button"
+                    ng-click="clearSearch()">X</button>
+            <button class="btn btn-default" type="button" ng-click="searchFunct()"><span
+                    class="glyphicon glyphicon-search"></span></button>
+        </span>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <label for="limit">Записей на странице:</label>
+
+        <div>
+            <ul id="limit" class="pagination" class="form-control" style="margin: auto">
+                <li ng-repeat="lim in limit" ng-class="{ active : pagination.limit == lim}"><a href=""
+                                                                                               ng-click="setLimit(lim)">{{lim}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <dir-pagination-controls boundary-links="true"
+                             on-page-change="pageChanged(pagination.page)"></dir-pagination-controls>
+</div>
+<table class="table table-condensed table-hover">
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Название</th>
+        <th>Город</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr dir-paginate="item in items | itemsPerPage: pagination.limit" total-items="pagination.totalItems"
+        current-page="pagination.page">
+        <td class="col-xs-1">{{((pagination.page - 1) * pagination.limit) + ($index + 1)}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.ownAddress[0].city}}</td>
+        <td class="text-center">
+            <button class="btn btn-default btn-sm glyphicon glyphicon-pencil" ng-click="edit(item)"></button>
+        </td>
+        <td>
+            <button class="btn btn-default btn-sm glyphicon glyphicon-trash" ng-click="delete(item)"></button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="container">
+    <button class="btn btn-primary" ng-click="add()">Добавить</button>
+</div>
