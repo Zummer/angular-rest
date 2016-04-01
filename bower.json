@@ -10,6 +10,7 @@
         "angular-mocks": "*",
         "bootstrap": "*",
         "jquery": "*",
-        "ngAutocomplete": "*"
+        "ngAutocomplete": "*",
+        "ngstorage": "*"
     }
 }

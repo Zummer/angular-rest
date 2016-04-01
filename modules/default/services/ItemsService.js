@@ -1,12 +1,16 @@
 app
     .factory('Items', function ($resource, $rootScope) {
-        //var baseUrl = 'rest/items';
+        var baseUrl = 'http://rest1/items';
         //var baseUrl = 'http://plottex.ru/rest/items';
-        var baseUrl = 'http://rest1.plottex.ru/items';
+        //var baseUrl = 'http://rest1.plottex.ru/items';
         
         var service = {};
         var items = {};
-        var servicePagination = {};
+        var servicePagination = {
+            limit: 10,
+            page: 1,
+            filter: ''
+        };
         var item = {}; // текущий item
 
         var itemsResource = $resource(baseUrl + '/:id' + '/:action', {id: '@id'}, {
@@ -38,14 +42,35 @@ app
         };
 
         service.get = function (id) {
-            var place = null;
+            var item = null;
             angular.forEach(items, function (value) {
                 if (parseInt(value.id) === parseInt(id)) {
                     item = value;
                     return false;
                 }
             });
-            return place;
+            return item;
+        };
+
+        service.getOneItem = function () {
+            return item;
+        };
+
+        service.getOneItemsFromServer = function (id) {
+            var promise = itemsResource.get({
+                id: id}).$promise;
+
+            promise.then(fulfilled, rejected);
+
+            function fulfilled(response) {
+                item = response;
+                $rootScope.$broadcast('item:getOne');
+            }
+
+            function rejected(error) {
+                console.log(error);
+            }
+
         };
 
         service.getItemsFromServer = function (pagination) {

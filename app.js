@@ -4,6 +4,7 @@ var app = angular.module('CrudApp', [
     'ngRoute',
     'angularUtils.directives.dirPagination',
     'ngAutocomplete',
+    'ngStorage'
 ]);
 app
     .config(function ($routeProvider, $httpProvider, $locationProvider) {
@@ -17,15 +18,43 @@ app
         $routeProvider
             .when('/page/:page', {
                 templateUrl: defaultPath + 'list.html'
-              })
+            })
             .when('/page/:page/limit/:limit', {
                 templateUrl: defaultPath + 'list.html'
             })
             .when('/edit/:id', {
-                templateUrl: defaultPath + 'edit.html'
+                templateUrl: defaultPath + 'edit.html',
+                controller: 'editCtrl',
+                resolve: {
+                    currentView: function () {
+                        return 'edit';
+                    }
+                }
+            })
+            .when('/view/:id', {
+                templateUrl: defaultPath + 'edit.html',
+                controller: 'editCtrl',
+                resolve: {
+                    currentView: function () {
+                        return 'view';
+                    }
+                }
             })
             .when('/add', {
-                templateUrl: defaultPath + 'edit.html'
+                templateUrl: defaultPath + 'edit.html',
+                controller: 'editCtrl',
+                resolve: {
+                    currentView: function () {
+                        return 'add';
+                    }
+                }
             })
             .otherwise({redirectTo: '/page/1/limit/10'});
     });
+
+app.run(function ($templateCache, $templateRequest) {
+    $templateRequest("modules/default/templates/dirMainTable.html").then(function (html) {
+        $templateCache.put("dirMainTable", html);
+    });
+});
+

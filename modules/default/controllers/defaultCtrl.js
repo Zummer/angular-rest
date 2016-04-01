@@ -8,21 +8,17 @@ app
 
         $scope.saving = false; // флаг записи
 
-        $scope.pagination = {};
+        $scope.pagination = Items.getPagination(); // проверим
 
-        $scope.limit = [10,20,30,50];
+        $scope.limits = [10,20,30,50];
         $scope.setLimit = function (limit){
             $scope.pagination.limit = limit;
         };
 
         $scope.myPressFunct = function(keyEvent) {
             if (keyEvent.which === 13) {
-                if (keyEvent.target.id == 'search'){
+                if (keyEvent.target.id == 'search') {
                     Items.getItemsFromServer($scope.pagination);
-                }
-                if (keyEvent.target.id == 'Autocomplete'){
-                    // нажимаем кнопку Сохранить
-                    //angular.element('#save').click("save(item)");
                 }
             }
         };
@@ -46,7 +42,7 @@ app
 
         $scope.item = {};
         $scope.items = null;
-        $scope.dontRequestForServer = false;
+        $scope.requestForServer = {dont: false};
 
         $scope.init = function () {
             $scope.items = Items.getAll();
@@ -62,15 +58,14 @@ app
                 filter: ($scope.pagination.filter !== undefined) ? $scope.pagination.filter : ''
             };
 
-            Items.setPagination(pag);
-
             if (pag.page !== undefined) {
-                if (!$scope.dontRequestForServer) {
+                Items.setPagination(pag);
+                if (!$scope.requestForServer.dont) {
                     Items.getItemsFromServer(pag);
                 }
             }
 
-            $scope.dontRequestForServer = false;
+            $scope.requestForServer.dont = false;
         });
 
         $scope.$on('items:updated', function () {
@@ -88,10 +83,16 @@ app
         $scope.$on('item:updated', function (event, args) {
             $scope.saving = false;
 
-            $scope.dontRequestForServer = true;
+            $scope.requestForServer.dont = ($scope.items != null);
+
             $scope.item = {};
-            // обновление $scope.items произошло в сервисе
-            // при получении ответа от сервера
+
+            if ($scope.pagination.page == undefined) {
+                if ($scope.pagination.limit == undefined) {
+                    $scope.pagination = Items.getPagination();
+                }
+            }
+
             $scope.pageChanged($scope.pagination.page);
         });
 
@@ -99,7 +100,7 @@ app
         $scope.$on('item:added', function () {
             $scope.saving = false;
 
-            $scope.dontRequestForServer = true;
+            $scope.requestForServer.dont = true;
             $scope.items = Items.getAll();
             $scope.pagination = Items.getPagination();
             $scope.item = {};
@@ -113,29 +114,19 @@ app
 
         $scope.edit = function (item) {
             $scope.item = item ? item : {};
+            //$scope.currentView = "edit";
             $location.path("/edit/" + item.id);
         };
 
-        // отмена изменений и возврат в представление list
-        $scope.cancel = function () {
-            $scope.dontRequestForServer = true;
-            $scope.item = {};
-            $scope.pageChanged($scope.pagination.page);
+        $scope.view = function (item) {
+            $scope.item = item ? item : {};
+            //$scope.currentView = "view";
+            $location.path("/view/" + item.id);
         };
 
         $scope.add = function () {
+            //$scope.currentView = "add";
             $location.path("/add");
-        };
-
-        // создание нового элемента
-        $scope.save = function () {
-            if (angular.isDefined($scope.item) &&
-                angular.isDefined($scope.item.name) &&
-                angular.isDefined($scope.item.ownAddress[0].city)) { // главное чтоб не пустой был
-
-                $scope.saving = true;
-                Items.save($scope.item, $scope.pagination.limit); // а внутри разберемся, есть id или нет
-            }
         };
 
         $scope.delete = function (item) {
