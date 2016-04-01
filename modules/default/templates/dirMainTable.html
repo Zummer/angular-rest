@@ -1,0 +1,31 @@
+<table class='table table-condensed table-hover'>
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Id</th>
+        <th>Название</th>
+        <th>Город</th>
+        <th><span class='btn-sm glyphicon glyphicon-eye-open'></span></th>
+        <!--<th><span class='btn-sm glyphicon glyphicon-pencil'></span></th>-->
+        <th><span class='btn-sm glyphicon glyphicon-trash'></span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr dir-paginate='item in source | itemsPerPage: pagination.limit' total-items='pagination.totalItems'
+        current-page='pagination.page'>
+        <td class='col-xs-1'>{{((pagination.page - 1) * pagination.limit) + ($index + 1)}}</td>
+        <td class='col-xs-1'>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.ownAddress[0].city}}</td>
+        <td class='col-xs-1'>
+            <button class='btn btn-default btn-sm glyphicon glyphicon-eye-open' ng-click='view(item)'></button>
+        </td>
+        <!--<td class='col-xs-1'>-->
+            <!--<button class='btn btn-default btn-sm glyphicon glyphicon-pencil' ng-click='edit(item)'></button>-->
+        <!--</td>-->
+        <td class='col-xs-1'>
+            <button class='btn btn-default btn-sm glyphicon glyphicon-trash' ng-click='delete(item)'></button>
+        </td>
+    </tr>
+    </tbody>
+</table>

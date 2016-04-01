@@ -1,0 +1,8 @@
+<label for='limits'>Записей на странице:</label>
+<div>
+    <ul id='limits' class='pagination' style='margin: auto'>
+        <li ng-repeat='lim in data' ng-class='{ active : pagination.limit == lim}'>
+            <a href='' ng-click='setLimit(lim)'>{{lim}}</a>
+        </li>
+    </ul>
+</div>
