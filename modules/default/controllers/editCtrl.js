@@ -70,6 +70,13 @@ app
                 // возращаемся в таблицу
                 $scope.pageChanged($scope.pagination.page);
             }
+
+            if ($scope.currentView == 'add') {
+                // обнуляем текущий item
+                $scope.item = {};
+                // возращаемся в таблицу
+                $scope.pageChanged($scope.pagination.page);
+            }
             //$localStorage.$reset();
         };
 

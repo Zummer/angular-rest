@@ -4,7 +4,8 @@ var app = angular.module('CrudApp', [
     'ngRoute',
     'angularUtils.directives.dirPagination',
     'ngAutocomplete',
-    'ngStorage'
+    'ngStorage',
+    'appConfig'
 ]);
 app
     .config(function ($routeProvider, $httpProvider, $locationProvider) {
