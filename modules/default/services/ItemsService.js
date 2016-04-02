@@ -1,6 +1,6 @@
 app
-    .factory('Items', function ($resource, $rootScope) {
-        var baseUrl = 'http://rest1/items';
+    .factory('Items', function ($resource, $rootScope, siteConfig) {
+        //var baseUrl = 'http://rest1/items';
         //var baseUrl = 'http://plottex.ru/rest/items';
         //var baseUrl = 'http://rest1.plottex.ru/items';
         
@@ -13,7 +13,7 @@ app
         };
         var item = {}; // текущий item
 
-        var itemsResource = $resource(baseUrl + '/:id' + '/:action', {id: '@id'}, {
+        var itemsResource = $resource(siteConfig.baseUrl + '/:id' + '/:action', {id: '@id'}, {
             query: {
                 isArray: false // хочу получить данные в виде объекта
             },
@@ -95,7 +95,7 @@ app
             }
         };
 
-        service.baseUrl = baseUrl;
+        //service.baseUrl = conf.baseUrl;
         service.save = function (item, limit) {
             if (undefined !== item.id && parseInt(item.id) > 0) {
                 this.update(item);

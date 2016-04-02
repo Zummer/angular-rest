@@ -1,6 +1,7 @@
 app
-    .controller('defaultCtrl', function ($scope, $routeParams, Items, $location) {
+    .controller('defaultCtrl', function ($scope, $routeParams, Items, $location, siteConfig) {
 
+        $scope.version = siteConfig.version;
 
         //$scope.$watch('item.ownAddress[0].city', function(newValue, oldValue) {
         //    alert('Упс!');

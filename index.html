@@ -7,6 +7,7 @@
     <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <body>
 <div class="container" ng-controller="defaultCtrl">
+    <p style="margin-top: 5px">Версия: <span ng-bind="version"></span></p>
     <div ng-view></div>
 </div>
 <!-- Библиотека гугл мапс -->
@@ -28,6 +29,7 @@
 <script src="modules/default/directives/dirLimitList.js"></script>
 <script src="modules/default/directives/dirCurrentView.js"></script>
 <script src="modules/default/directives/dirMainTable.js"></script>
+<script src="modules/default/config/siteConfig.js"></script>
 
 </body>
 </html>
